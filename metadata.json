@@ -1,0 +1,7 @@
+{
+  "name": "SousChef AI",
+  "description": "An intelligent cooking assistant that generates creative recipes from your ingredients and visualizes the final dish.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
