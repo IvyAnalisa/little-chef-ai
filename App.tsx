@@ -528,6 +528,7 @@ const App: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 text-center">
           <div className="font-script text-4xl text-[#8b0000] mb-4">Bon Appétit!</div>
           <p className="text-[#b87333] text-xs uppercase tracking-[0.4em] font-bold mb-8">LittleChef Gourmet Kitchen AI</p>
+          <p className="text-[#b87333] text-xs uppercase tracking-[0.4em] font-bold mb-8">© 2026 Ivy Analisa . All rights reserved.</p>
         </div>
       </footer>
     </div>
