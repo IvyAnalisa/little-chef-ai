@@ -91,7 +91,8 @@ const App: React.FC = () => {
       const recipe = await generateRecipe(
         state.ingredients,
         state.dietaryRestrictions,
-        state.cookingTime
+        state.cookingTime,
+        
       );
 
       setState(prev => ({ ...prev, recipe, isLoading: false, isGeneratingImage: true }));
@@ -336,7 +337,7 @@ const App: React.FC = () => {
                 >
                   {state.isLoading ? (
                     <div className="flex items-center gap-3">
-                      <div className="animate-bounce text-2xl">🔪</div>
+                      <div className="animate-bounce text-2xl">👨‍🍳</div>
                       <span className="font-serif italic text-lg uppercase tracking-widest">Chef is Preparing...</span>
                     </div>
                   ) : (

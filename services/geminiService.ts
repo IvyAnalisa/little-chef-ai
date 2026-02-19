@@ -77,23 +77,39 @@ export const generateFoodImage = async (recipeTitle: string, description: string
   Vibrant colors, cinematic lighting, Disney Ratatouille aesthetic, highly detailed textures, appetizing and warm kitchen atmosphere. 
   Stylized but realistic textures, restaurant quality plating. Include a subtle, friendly mouse chef silhouette in the background if appropriate.`;
   
-  const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash-image',
-    contents: {
-      parts: [{ text: prompt }]
-    },
-    config: {
-      imageConfig: {
-        aspectRatio: "16:9"
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash-image',
+      contents: {
+        parts: [{ text: prompt }]
+      },
+      config: {
+        imageConfig: {
+          aspectRatio: "16:9"
+        }
+      }
+    });
+
+    const parts = response.candidates?.[0]?.content?.parts || [];
+    
+    // Check for image data first
+    for (const part of parts) {
+      if (part.inlineData) {
+        return `data:image/png;base64,${part.inlineData.data}`;
       }
     }
-  });
 
-  for (const part of response.candidates?.[0]?.content?.parts || []) {
-    if (part.inlineData) {
-      return `data:image/png;base64,${part.inlineData.data}`;
+    // Check if the model returned a reason for refusal (safety filters)
+    for (const part of parts) {
+      if (part.text) {
+        console.warn("Model returned text instead of image:", part.text);
+        throw new Error(`Chef's Refusal: ${part.text}`);
+      }
     }
+    
+    throw new Error("The little chef prepared the dish, but it's hidden from view. (No image data returned)");
+  } catch (error: any) {
+    console.error("Detailed Image Generation Error:", error);
+    throw error;
   }
-  
-  throw new Error("Failed to generate image");
 };
